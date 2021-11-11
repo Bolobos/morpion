@@ -9,7 +9,6 @@ int l_int_cpt = 0;						//compteur pour jouer chacun son tour
 int l_int_cpt2 = 0;						//compteur pour voir si la grille est complète
 int l_int_verification = 0;				//variable retournant la situation du jeu (pas fini, gagnant, nul)
 int l_int_botrand = 0;					//
-int l_int_gagne = 0;					//variable retournant le gagnant
 
 
 //jeu normal (avec l'etat du jeu de base)
@@ -61,10 +60,10 @@ void jeu1_1(void) {
 		for (iBcl = 0; iBcl < TAILLE; iBcl = iBcl + 3) {
 			l_int_temp = l_tabInt_morpion[iBcl] * l_tabInt_morpion[iBcl + 1] * l_tabInt_morpion[iBcl + 2];
 			if (l_int_temp == 1) {
-				l_int_gagne = 1;
+				l_int_verification = 1;
 			}
 			else if (l_int_temp == 8) {
-				l_int_gagne = 2;
+				l_int_verification = 2;
 			}
 			else {}
 		}
@@ -73,10 +72,10 @@ void jeu1_1(void) {
 		for (iBcl = 0; iBcl < 3; iBcl++) {
 			l_int_temp = l_tabInt_morpion[iBcl] * l_tabInt_morpion[iBcl + 3] * l_tabInt_morpion[iBcl + 6];
 			if (l_int_temp == 1) {
-				l_int_gagne = 1;
+				l_int_verification = 1;
 			}
 			else if (l_int_temp == 8) {
-				l_int_gagne = 2;
+				l_int_verification = 2;
 			}
 			else {}
 		}
@@ -90,10 +89,10 @@ void jeu1_1(void) {
 				l_int_temp = l_tabInt_morpion[iBcl] * l_tabInt_morpion[iBcl + 2] * l_tabInt_morpion[iBcl + 4];
 			}
 			if (l_int_temp == 1) {
-				l_int_gagne = 1;
+				l_int_verification = 1;
 			}
 			else if (l_int_temp == 8) {
-				l_int_gagne = 2;
+				l_int_verification = 2;
 			}
 			else {}
 		}
@@ -101,7 +100,7 @@ void jeu1_1(void) {
 		l_int_cpt++;
 		l_int_cpt2++;
 
-	} while ((l_int_cpt2 < 9) && (l_int_gagne != 1) && (l_int_gagne != 2));				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
+	} while ((l_int_cpt2 < 9) && (l_int_verification != 1) && (l_int_verification != 2));				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
 }
 
 //enlevement de case
@@ -150,32 +149,17 @@ void jeu1_2(void) {
 		}
 		else {}
 
-
-		l_int_verification = verifie(l_tabInt_morpion);				//verification de la situation du jeu (gagnant, match nul, ou partie pas finie)
-
-
 		//Option 2 : effacement aléatoire d'une case de la grille
-		if ((l_int_gagne != 1) && (l_int_gagne != 2)) {
+		if ((l_int_verification != 1) && (l_int_verification != 2)) {
 			l_int_enlever = rand() % 9;				//tirage aléatoire de 0 à 8
 			l_tabInt_morpion[l_int_enlever] = 0;
 		}
 
+		l_int_verification = verifie(l_tabInt_morpion);				//verification de la situation du jeu (gagnant, match nul, ou partie pas finie)
+
 		l_int_cpt++;			//incrémentation du compteur 1
 
-
-		//Arrêtez le programme
-		for (iBcl = 0; iBcl < TAILLE; iBcl++) {
-			if ((l_tabInt_morpion[iBcl] == 1) || (l_tabInt_morpion[iBcl] == 2)) {
-				l_int_cpt2++;
-			}
-		}
-
-
-		if (l_int_cpt2 < 9) {
-			l_int_cpt2 = 0;
-		}
-
-	} while ((l_int_cpt2 < 9) && (l_int_gagne != 1) && (l_int_gagne != 2));//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
+	} while (l_int_verification == 0);				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
 }
 
 //temps limite
@@ -226,7 +210,6 @@ void jeu1_3(void) {
 
 		if (l_int_input == 1) {
 
-			l_int_cpt2++;
 			scanf("%i", &l_int_input);
 
 			//vérification des cases existantes et libre
@@ -239,18 +222,15 @@ void jeu1_3(void) {
 				}
 				else {}
 			}
-			else {
-				l_int_cpt2--;
-			}
+			else{}
 		}
 		else {}
 
 		l_int_verification = verifie(l_tabInt_morpion);				//verification de la situation du jeu (gagnant, match nul, ou partie pas finie)
 
-
 		l_int_cpt++;
 
-	} while ((l_int_cpt2 < 10) && (l_int_gagne != 1) && (l_int_gagne != 2) && (l_int_temp < 10));			//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
+	} while (l_int_verification == 0);			//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
 }
 
 //BOT aléatoire
@@ -303,7 +283,7 @@ void jeu2_1(void) {
 
 		l_int_cpt = l_int_cpt + 2;				//incr�mentation de 2 car le joueur et l'IA est compte
 
-	} while ((l_int_verification != 1) && (l_int_verification != 2) );				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
+	} while (l_int_verification == 0);				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
 }
 
 //BOT intelligent
@@ -416,12 +396,13 @@ void jeu2_2(void) {
 		l_int_verification = verifie(l_tabInt_morpion);
 
 
-	} while ((l_int_verification != -1) && (l_int_verification != 1) && (l_int_verification != 2));				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
+	} while (l_int_verification == 0);				//condition lors d'un gagnant ou d'un match nul ou lorsqu'il y n'y a plus de place
 }
 
 void main(void) {
 	//Reservations :
 	int l_int_choix = 0;
+	int l_int_choix2 = 1;
 
 	//Instructions :
 
@@ -429,8 +410,9 @@ void main(void) {
 	printf("Veuillez choisir votre mode de jeu :\n1 : joueur contre joueur\n2 : joueur contre BOT\n");
 	scanf("%i", &l_int_choix);
 	switch (l_int_choix) {
-	case 1:			
-		printf("Veuillez choisir votre mode de jeu :\n1 : joueur contre joueur\n2 : joueur contre BOT\n");
+	case 1:		
+		system("CLS");
+		printf("Veuillez choisir votre mode de jeu :\n1 : mode normal\n2 : enlevement de case\n3 : temps limite");
 		scanf("%i", &l_int_choix);
 		switch (l_int_choix){				//joueur contre joueur
 		case 1:
@@ -448,6 +430,8 @@ void main(void) {
 		}
 		break;
 	case 2:						//enlevement de case
+		l_int_choix2 = 0;
+		system("CLS");
 		printf("Type de BOT :\n1 : Mode A (BOT aleatoire)\n2 : Mode B (BOT intelligent)\n");
 		scanf("%i", &l_int_choix);
 		switch (l_int_choix) {
@@ -487,11 +471,11 @@ void main(void) {
 	}
 
 	else if (l_int_verification == 2) {
-		if (l_int_choix == 1){					//condition pour savoir qui gagne si ce n'est pas le joueur 1 (IA ou joueur 2)
-			printf("Le JOUEUR 2 GAGNANT(E)");
+		if (l_int_choix2) {					//condition pour savoir qui gagne si ce n'est pas le joueur 1 (IA ou joueur 2)
+			printf("L'IA EST GAGNANTE");
 		}
 		else {
-			printf("L'IA EST GAGNANTE");
+			printf("Le JOUEUR 2 GAGNANT(E)");
 		}
 	}
 

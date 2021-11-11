@@ -23,7 +23,7 @@
     <ClCompile Include="fctMorpion.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="mainMorpionP1.cpp">
+    <ClCompile Include="mainMorpionP2.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
