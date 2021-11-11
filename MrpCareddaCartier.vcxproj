@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fctMorpion.cpp" />
-    <ClCompile Include="mainMorpionP2.cpp" />
+    <ClCompile Include="Morpion_versionFinale.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
