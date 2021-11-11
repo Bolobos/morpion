@@ -412,6 +412,7 @@ void main(void) {
 	switch (l_int_choix) {
 	case 1:		
 		system("CLS");
+		l_int_temp = 1;
 		printf("Veuillez choisir votre mode de jeu :\n1 : mode normal\n2 : enlevement de case\n3 : temps limite");
 		scanf("%i", &l_int_choix);
 		switch (l_int_choix){				//joueur contre joueur
@@ -426,11 +427,13 @@ void main(void) {
 			break;
 		default:
 			printf("Choix non reconnu.");
+			l_int_temp = 0;
 			break;
 		}
 		break;
 	case 2:						//enlevement de case
 		l_int_choix2 = 0;
+		l_int_temp = 1;
 		system("CLS");
 		printf("Type de BOT :\n1 : Mode A (BOT aleatoire)\n2 : Mode B (BOT intelligent)\n");
 		scanf("%i", &l_int_choix);
@@ -443,43 +446,47 @@ void main(void) {
 			break;
 		default :
 			printf("Choix non reconnu.");
+			l_int_temp = 0;
 		}
 		break;
 	default:
 		printf("Choix non reconnu.");
+		l_int_temp = 0;
 	}
+	
+	if (l_int_temp) {
+		//affichage grille finale
+		system("CLS");
+		afficheLigne();
+		afficheValeur(l_tabInt_morpion[6]);
+		afficheValeur(l_tabInt_morpion[7]);
+		afficheValeur(l_tabInt_morpion[8]);
+		afficheLigne();
+		afficheValeur(l_tabInt_morpion[3]);
+		afficheValeur(l_tabInt_morpion[4]);
+		afficheValeur(l_tabInt_morpion[5]);
+		afficheLigne();
+		afficheValeur(l_tabInt_morpion[0]);
+		afficheValeur(l_tabInt_morpion[1]);
+		afficheValeur(l_tabInt_morpion[2]);
+		afficheLigneBis();
 
-	//affichage grille finale
-	system("CLS");
-	afficheLigne();
-	afficheValeur(l_tabInt_morpion[6]);
-	afficheValeur(l_tabInt_morpion[7]);
-	afficheValeur(l_tabInt_morpion[8]);
-	afficheLigne();
-	afficheValeur(l_tabInt_morpion[3]);
-	afficheValeur(l_tabInt_morpion[4]);
-	afficheValeur(l_tabInt_morpion[5]);
-	afficheLigne();
-	afficheValeur(l_tabInt_morpion[0]);
-	afficheValeur(l_tabInt_morpion[1]);
-	afficheValeur(l_tabInt_morpion[2]);
-	afficheLigneBis();
-
-	//affichage resultat
-	if (l_int_verification == 1) {
-		printf("JOUEUR 1 GAGNANT(E)");
-	}
-
-	else if (l_int_verification == 2) {
-		if (l_int_choix2) {					//condition pour savoir qui gagne si ce n'est pas le joueur 1 (IA ou joueur 2)
-			printf("L'IA EST GAGNANTE");
+		//affichage resultat
+		if (l_int_verification == 1) {
+			printf("JOUEUR 1 GAGNANT(E)");
 		}
+
+		else if (l_int_verification == 2) {
+			if (l_int_choix2) {					//condition pour savoir qui gagne si ce n'est pas le joueur 1 (IA ou joueur 2)
+				printf("L'IA EST GAGNANTE");
+			}
+			else {
+				printf("Le JOUEUR 2 GAGNANT(E)");
+			}
+		}
+
 		else {
-			printf("Le JOUEUR 2 GAGNANT(E)");
+			printf("MATCH NUL");
 		}
-	}
-
-	else {
-		printf("MATCH NUL");
 	}
 }
